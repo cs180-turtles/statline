@@ -1,0 +1,16 @@
+.glow {
+    font-weight: 800; /* Corrected to a valid font-weight value */
+    font-size: 24px;
+    color: white; /* Ensuring text color contrasts well with glow for better visibility */
+    text-shadow: 
+      0 0 10px rgba(0, 255, 0, 0.8), /* Innermost layer of glow */
+      0 0 24px rgba(0, 255, 0, 0.8); /* Further diffuse effect */
+  }
+  
+  .card {
+    background-color: black;
+  }
+
+  .card:hover {
+    opacity: 0.4;
+  }

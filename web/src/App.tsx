@@ -1,15 +1,15 @@
-import { Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
 import HomeScreen from "./screens/home/HomeScreen";
 import PlayerScreen from "./screens/player/PlayerScreen";
-import "./App.css";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<HomeScreen />} />
-        <Route path="/home" element={<HomeScreen />} />
-        <Route path="/player/:playerId" element={<PlayerScreen />} />
+        <Route path="/*" element={<HomeScreen />} />
+        <Route path="/players" element={<HomeScreen />} />
+        <Route path="/players/:playerId" element={<PlayerScreen />} />
       </Routes>
     </>
   );

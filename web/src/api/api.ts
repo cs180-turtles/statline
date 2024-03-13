@@ -1,43 +1,78 @@
-import playerIdMapJson from "../api/playerIdMap.json";
+import { Player } from "./types";
 
-type PlayerIdMap = { [key: string]: number };
-
-async function getPlayers() {
-  const token = "e7de96f6-4456-475e-9676-989b0e8a29ec";
-  return fetch("https://api.balldontlie.io/v1/players?per_page=100", {
+async function getPlayer(playerId: string): Promise<Player> {
+  return fetch(`http://127.0.0.1:8001/players/${playerId}`, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json",
-      Authorization: token,
+      Accept: "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((player) => {
+      const statlineScore =
+        ((0.5 * player.ppg +
+          player.apg +
+          player.rpg +
+          2 * player.spg +
+          2 * player.bpg) *
+          (player.three_pt_percentage + player.fg_percentage)) /
+        2;
+
+      return {
+        statlineScore: statlineScore,
+        playerId: player.player_id,
+        profilePic: player.profile_pic,
+        name: player.name,
+        team: player.team,
+        ppg: player.ppg,
+        apg: player.apg,
+        rpg: player.rpg,
+        spg: player.spg,
+        bpg: player.bpg,
+        threePtPercentage: player.three_pt_percentage,
+        fgPercentage: player.fg_percentage,
+        plusMinus: player.plus_minus,
+      };
+    });
+}
+
+async function getPlayers(): Promise<Player[]> {
+  return fetch("http://127.0.0.1:8001/players", {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
     },
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      const formattedResp = data.data.map((player: any) => {
-        const playerIdMap: PlayerIdMap = playerIdMapJson;
-        console.log(
-          `${player.first_name.toLowerCase()}-${player.last_name.toLowerCase()}`
-        );
-        const nbaId =
-          playerIdMap[
-            `${player.first_name.toLowerCase()}-${player.last_name.toLowerCase()}`
-          ];
-        console.log(nbaId);
+      const formattedResp = data.map((player: any) => {
+        const statlineScore =
+          ((0.5 * player.ppg +
+            player.apg +
+            player.rpg +
+            2 * player.spg +
+            2 * player.bpg) *
+            (player.three_pt_percentage + player.fg_percentage)) /
+          2;
+
         return {
-          playerId: player.id,
-          profilePic: nbaId
-            ? `https://cdn.nba.com/headshots/nba/latest/260x190/${nbaId}.png`
-            : "",
-          firstName: player.first_name,
-          lastName: player.last_name,
-          jerseyNumber: player.jersey_number,
-          position: player.position,
-          team: player.team.full_name,
+          statlineScore: statlineScore,
+          playerId: player.player_id,
+          profilePic: player.profile_pic,
+          name: player.name,
+          team: player.team,
+          ppg: player.ppg,
+          apg: player.apg,
+          rpg: player.rpg,
+          spg: player.spg,
+          bpg: player.bpg,
+          threePtPercentage: player.three_pt_percentage,
+          fgPercentage: player.fg_percentage,
+          plusMinus: player.plus_minus,
         };
       });
       return formattedResp;
     });
 }
 
-export { getPlayers };
+export { getPlayer, getPlayers };

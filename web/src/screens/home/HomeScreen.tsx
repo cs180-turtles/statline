@@ -1,11 +1,11 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getPlayers } from "../../api/api";
+import { Player } from "../../api/types";
 import PlayerCard from "./components/PlayerCard";
 
 export default function HomeScreen() {
-  const [players, setPlayers] = useState([]);
-  const [filteredPlayers, setFilteredPlayers] = useState([]);
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [filteredPlayers, setFilteredPlayers] = useState<Player[]>([]);
   const [playerSearch, setPlayerSearch] = useState("");
 
   useEffect(() => {
@@ -17,9 +17,7 @@ export default function HomeScreen() {
   useEffect(() => {
     if (playerSearch.length > 0) {
       const filteredPlayers = players.filter((player: any) => {
-        return `${player.firstName} ${player.lastName}`
-          .toLowerCase()
-          .includes(playerSearch.toLowerCase());
+        return player.name.toLowerCase().includes(playerSearch.toLowerCase());
       });
       setFilteredPlayers(filteredPlayers);
     } else {
@@ -60,20 +58,11 @@ export default function HomeScreen() {
           gap: "10px",
         }}
       >
-        {filteredPlayers.map((player: any) => {
-          return (
-            <PlayerCard
-              key={player.id}
-              playerId={player.id}
-              profilePic={player.profilePic}
-              firstName={player.firstName}
-              lastName={player.lastName}
-              jerseyNumber={player.jerseyNumber}
-              position={player.position}
-              team={player.team}
-            />
-          );
-        })}
+        {filteredPlayers
+          .sort((a, b) => b.statlineScore - a.statlineScore)
+          .map((player: any) => {
+            return <PlayerCard player={player} />;
+          })}
       </div>
     </div>
   );
