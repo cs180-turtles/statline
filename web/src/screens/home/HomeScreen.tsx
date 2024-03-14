@@ -32,7 +32,7 @@ export default function HomeScreen() {
         style={{
           display: "flex",
           justifyContent: "center",
-          padding: " 0 0 20px 0",
+          padding: "0 0 20px 0",
         }}
       >
         <input
@@ -41,7 +41,6 @@ export default function HomeScreen() {
             width: "100%",
             padding: "10px 20px 10px 20px",
             fontSize: "20px",
-            maxWidth: "1000px",
             border: "none",
           }}
           type="text"

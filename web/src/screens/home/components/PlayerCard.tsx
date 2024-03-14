@@ -12,7 +12,7 @@ export default function PlayerCard({ player }: { player: Player }) {
         display: "flex",
         flexDirection: "column",
         width: "200px",
-        padding: "0 20px 0px 20px",
+        padding: "0 2px 0 2px",
         borderRadius: "10px",
         cursor: "pointer",
       }}
@@ -21,7 +21,7 @@ export default function PlayerCard({ player }: { player: Player }) {
       }}
     >
       <div>
-        <div style={{ minHeight: "200px", display: "flex", alignItems: "end" }}>
+        <div style={{ minHeight: "180px", display: "flex", alignItems: "end" }}>
           <img
             style={{ width: "100%" }}
             src={
@@ -32,6 +32,8 @@ export default function PlayerCard({ player }: { player: Player }) {
             alt={player.name}
           />
         </div>
+      </div>
+      <div style={{ padding: "0 15px 0 15px" }}>
         <h3
           style={{
             textAlign: "start",
@@ -44,26 +46,29 @@ export default function PlayerCard({ player }: { player: Player }) {
         >
           {player.name}
         </h3>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
+
         <div
           style={{
-            alignItems: "start",
-            padding: "0 0 20px 0",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
           }}
         >
-          <span className="glow">{player.statlineScore.toFixed(2)}</span>
-        </div>
-        <div>
-          <span style={{ fontWeight: 800, fontSize: "24px" }}>
-            {player.team}
-          </span>
+          <div
+            style={{
+              alignItems: "start",
+              padding: "0 0 20px 0",
+            }}
+          >
+            <span className="glow" style={{ fontSize: "24px" }}>
+              {player.statlineScore.toFixed(2)}
+            </span>
+          </div>
+          <div>
+            <span style={{ fontWeight: 800, fontSize: "24px" }}>
+              {player.team}
+            </span>
+          </div>
         </div>
       </div>
     </div>
