@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getPlayer } from "../../api/api";
 import { Player } from "../../api/types";
 
@@ -24,6 +24,7 @@ function Stat({ label, value }: { label: string; value: number }) {
 }
 
 export default function PlayerScreen() {
+  const navigate = useNavigate();
   const params = useParams();
 
   const playerId = params.playerId;
@@ -46,6 +47,17 @@ export default function PlayerScreen() {
         width: "100%",
       }}
     >
+      <div
+        onClick={() => navigate("/players")}
+        style={{
+          cursor: "pointer",
+          width: "100%",
+          display: "flex",
+          justifyContent: "start",
+        }}
+      >
+        <span style={{ fontSize: "24px", fontWeight: "bold" }}>{"< Back"}</span>
+      </div>
       {player != null ? (
         <div
           style={{
